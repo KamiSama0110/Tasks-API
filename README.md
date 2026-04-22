@@ -1,98 +1,245 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# First App API (NestJS)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST con autenticacion JWT y gestion de tareas por usuario.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Cada usuario solo puede crear, ver, actualizar y eliminar sus propias tareas.
 
-## Description
+## Tecnologias
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- NestJS
+- TypeORM
+- SQLite
+- Passport + JWT
+- class-validator
 
-## Project setup
+## Requisitos
 
-```bash
-$ yarn install
-```
+- Node.js 20+
+- Yarn 1.22+
 
-## Compile and run the project
+## Primeros pasos (al clonar el repo)
+
+1. Clonar el repositorio.
+2. Instalar dependencias.
+3. Crear archivo .env.
+4. Ejecutar la API.
+
+Comandos (copiar y pegar):
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+git clone <URL_DEL_REPO>
+cd first-app
+yarn install
 ```
 
-## Run tests
+## Variables de entorno
+
+Crear un archivo .env en la raiz del proyecto (copiar y pegar):
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+cat > .env << 'EOF'
+JWT_SECRET=tu_clave_super_secreta
+PORT=3000
+EOF
 ```
 
-## Deployment
+Notas:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- JWT_SECRET es obligatorio para firmar y validar tokens.
+- PORT es opcional. Si no se define, se usa 3000.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Ejecutar en desarrollo
 
 ```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+yarn start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Tambien puedes usar:
 
-## Resources
+```bash
+yarn start
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## Flujo rapido para probar la API con Postman
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Base URL:
 
-## Support
+```text
+http://localhost:3000
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Variables recomendadas en Postman (Environment):
 
-## Stay in touch
+- BASE_URL = http://localhost:3000
+- TOKEN = (vacio al inicio, se llena despues del login)
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 1) Registrar usuario
 
-## License
+POST /auth/register
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Configuracion en Postman:
+
+- Method: POST
+- URL: {{BASE_URL}}/auth/register
+- Headers:
+  - Content-Type: application/json
+- Body (raw, JSON):
+
+```json
+{
+  "email": "test1@mail.com",
+  "password": "Test1234",
+  "fullName": "Test User"
+}
+```
+
+Respuesta esperada:
+
+- usuario creado
+- token JWT
+
+### 2) Login
+
+POST /auth/login
+
+Configuracion en Postman:
+
+- Method: POST
+- URL: {{BASE_URL}}/auth/login
+- Headers:
+  - Content-Type: application/json
+- Body (raw, JSON):
+
+```json
+{
+  "email": "test1@mail.com",
+  "password": "Test1234"
+}
+```
+
+Guarda el token de la respuesta en la variable TOKEN del Environment.
+
+### 3) Verificar sesion
+
+GET /auth/check-status
+
+Configuracion en Postman:
+
+- Method: GET
+- URL: {{BASE_URL}}/auth/check-status
+- Authorization tab:
+  - Type: Bearer Token
+  - Token: {{TOKEN}}
+
+### 4) Probar tareas privadas
+
+Todos estos endpoints requieren token:
+
+- POST /tasks
+- GET /tasks
+- GET /tasks/:id
+- PATCH /tasks/:id
+- DELETE /tasks/:id
+
+En Postman, para todos estos requests:
+
+- Authorization tab:
+  - Type: Bearer Token
+  - Token: {{TOKEN}}
+
+Crear tarea:
+
+- Method: POST
+- URL: {{BASE_URL}}/tasks
+- Headers:
+  - Content-Type: application/json
+- Body (raw, JSON):
+
+```json
+{
+  "title": "Aprender Nest",
+  "description": "Practicar JWT y ownership",
+  "status": "OPEN"
+}
+```
+
+Listar tareas del usuario autenticado:
+
+- Method: GET
+- URL: {{BASE_URL}}/tasks?limit=10&offset=0
+
+Ver una tarea por id:
+
+- Method: GET
+- URL: {{BASE_URL}}/tasks/1
+
+Actualizar una tarea:
+
+- Method: PATCH
+- URL: {{BASE_URL}}/tasks/1
+- Headers:
+  - Content-Type: application/json
+- Body (raw, JSON):
+
+```json
+{
+  "status": "IN_PROGRESS"
+}
+```
+
+Eliminar una tarea:
+
+- Method: DELETE
+- URL: {{BASE_URL}}/tasks/1
+
+## Filtros de listado de tareas
+
+GET /tasks permite query params opcionales:
+
+- limit (number)
+- offset (number)
+- status (OPEN | IN_PROGRESS | DONE)
+
+Ejemplo:
+
+```text
+GET /tasks?limit=10&offset=0&status=OPEN
+```
+
+## Reglas de seguridad implementadas
+
+- Endpoints de tareas protegidos con JWT.
+- Cada tarea queda asociada al usuario autenticado.
+- Un usuario no puede acceder ni modificar tareas de otro usuario.
+- Validaciones globales activas con whitelist y forbidNonWhitelisted.
+
+## Scripts utiles
+
+```bash
+yarn build
+yarn start
+yarn start:dev
+yarn test
+yarn test:e2e
+```
+
+
+## Troubleshooting
+
+### Error: Configuration key JWT_SECRET does not exist
+
+Verifica que exista el archivo .env con JWT_SECRET en la raiz.
+
+### Error: listen EADDRINUSE: address already in use :::3000
+
+El puerto 3000 ya esta en uso.
+
+Opciones:
+
+- cerrar el proceso que ya usa ese puerto
+- cambiar PORT en el archivo .env
+
+### Error de esquema en SQLite tras cambios de entidad
+
+Si hiciste cambios grandes de entidades durante desarrollo local, puedes eliminar db.sqlite para recrear esquema limpio con synchronize.
+
