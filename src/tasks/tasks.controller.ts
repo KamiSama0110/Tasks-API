@@ -54,4 +54,13 @@ export class TasksController {
   async remove(@Param('id', ParseIntPipe) id: number, @GetUser() user: User) {
     return this.tasksService.remove(id, user);
   }
+
+  @Patch(':id/restore')
+  @Auth()
+  async restore(
+    @Param('id', ParseIntPipe) id: number,
+    @GetUser() user: User,
+  ) {
+    return this.tasksService.restore(id, user);
+  }
 }

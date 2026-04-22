@@ -16,8 +16,16 @@ export class User {
     @Column('text')
     fullName: string;
 
-    @Column('text')
+    @Column('text', {
+        select: false,
+    })
     password: string;
+
+    @Column('text', {
+        nullable: true,
+        select: false,
+    })
+    currentHashedRefreshToken?: string | null;
 
     @Column('boolean', {
         default: true,

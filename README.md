@@ -41,6 +41,7 @@ Crear un archivo .env en la raiz del proyecto (copiar y pegar):
 ```bash
 cat > .env << 'EOF'
 JWT_SECRET=tu_clave_super_secreta
+JWT_REFRESH_SECRET=tu_clave_super_secreta_refresh
 PORT=3000
 EOF
 ```
@@ -48,6 +49,7 @@ EOF
 Notas:
 
 - JWT_SECRET es obligatorio para firmar y validar tokens.
+- JWT_REFRESH_SECRET es recomendado para refresh tokens. Si no existe, se reutiliza JWT_SECRET.
 - PORT es opcional. Si no se define, se usa 3000.
 
 ## Ejecutar en desarrollo
@@ -74,6 +76,7 @@ Variables recomendadas en Postman (Environment):
 
 - BASE_URL = http://localhost:3000
 - TOKEN = (vacio al inicio, se llena despues del login)
+- REFRESH_TOKEN = (vacio al inicio, se llena despues del login)
 
 ### 1) Registrar usuario
 
@@ -98,7 +101,8 @@ Configuracion en Postman:
 Respuesta esperada:
 
 - usuario creado
-- token JWT
+- token
+- refreshToken
 
 ### 2) Login
 
@@ -120,6 +124,7 @@ Configuracion en Postman:
 ```
 
 Guarda el token de la respuesta en la variable TOKEN del Environment.
+Guarda tambien refreshToken en la variable REFRESH_TOKEN.
 
 ### 3) Verificar sesion
 
@@ -133,7 +138,27 @@ Configuracion en Postman:
   - Type: Bearer Token
   - Token: {{TOKEN}}
 
-### 4) Probar tareas privadas
+### 4) Renovar tokens con refresh token
+
+POST /auth/refresh-token
+
+Configuracion en Postman:
+
+- Method: POST
+- URL: {{BASE_URL}}/auth/refresh-token
+- Headers:
+  - Content-Type: application/json
+- Body (raw, JSON):
+
+```json
+{
+  "refreshToken": "{{REFRESH_TOKEN}}"
+}
+```
+
+Guarda los nuevos valores token y refreshToken en TOKEN y REFRESH_TOKEN.
+
+### 5) Probar tareas privadas
 
 Todos estos endpoints requieren token:
 
@@ -141,6 +166,7 @@ Todos estos endpoints requieren token:
 - GET /tasks
 - GET /tasks/:id
 - PATCH /tasks/:id
+- PATCH /tasks/:id/restore
 - DELETE /tasks/:id
 
 En Postman, para todos estos requests:
@@ -193,6 +219,11 @@ Eliminar una tarea:
 
 - Method: DELETE
 - URL: {{BASE_URL}}/tasks/1
+
+Restaurar una tarea eliminada (soft delete):
+
+- Method: PATCH
+- URL: {{BASE_URL}}/tasks/1/restore
 
 ## Filtros de listado de tareas
 

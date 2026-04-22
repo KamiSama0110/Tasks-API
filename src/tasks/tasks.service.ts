@@ -65,7 +65,24 @@ export class TasksService {
 
   async remove(id: number, user: User) {
     const task = await this.findOne(id, user);
-    await this.taskRepository.remove(task);
-    return { message: `Task with id ${id} has been removed` };
+    await this.taskRepository.softDelete(task.id);
+    return { message: `Task with id ${id} has been soft deleted` };
+  }
+
+  async restore(id: number, user: User) {
+    const task = await this.taskRepository.findOne({
+      where: {
+        id,
+        user: { id: user.id },
+      },
+      withDeleted: true,
+    });
+
+    if (!task || !task.deletedAt) {
+      throw new NotFoundException(`Deleted task with id ${id} not found`);
+    }
+
+    await this.taskRepository.restore(task.id);
+    return await this.findOne(id, user);
   }
 }

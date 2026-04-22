@@ -1,5 +1,11 @@
 import { User } from "src/auth/entities/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    DeleteDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+} from "typeorm";
 
 export enum TaskStatus {
     OPEN = 'OPEN',
@@ -29,4 +35,7 @@ export class Task {
         (user) => user.tasks,
     )
     user: User;
+
+    @DeleteDateColumn({ nullable: true })
+    deletedAt?: Date | null;
 }
