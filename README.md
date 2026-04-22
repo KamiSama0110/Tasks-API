@@ -4,6 +4,8 @@ API REST con autenticacion JWT y gestion de tareas por usuario.
 
 Cada usuario solo puede crear, ver, actualizar y eliminar sus propias tareas.
 
+**Repo hecho con fines de aprendizaje de NestJS**
+
 ## Tecnologias
 
 - NestJS
