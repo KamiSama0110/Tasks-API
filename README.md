@@ -64,7 +64,18 @@ Tambien puedes usar:
 yarn start
 ```
 
-## Flujo rapido para probar la API con Postman
+## Flujo rapido para probar la API con Bruno
+
+Coleccion Bruno incluida en el repo:
+
+- bruno/first-app-api
+
+Como usarla en Bruno:
+
+1. Abrir Bruno.
+2. Open Collection.
+3. Seleccionar la carpeta bruno/first-app-api.
+4. Elegir el environment Local.
 
 Base URL:
 
@@ -72,20 +83,21 @@ Base URL:
 http://localhost:3000
 ```
 
-Variables recomendadas en Postman (Environment):
+Variables del environment Local en Bruno:
 
-- BASE_URL = http://localhost:3000
-- TOKEN = (vacio al inicio, se llena despues del login)
-- REFRESH_TOKEN = (vacio al inicio, se llena despues del login)
+- baseUrl = http://localhost:3000
+- token = (vacio al inicio, se llena despues del login)
+- refreshToken = (vacio al inicio, se llena despues del login)
+- taskId = 1
 
 ### 1) Registrar usuario
 
 POST /auth/register
 
-Configuracion en Postman:
+Configuracion en Bruno:
 
 - Method: POST
-- URL: {{BASE_URL}}/auth/register
+- URL: {{baseUrl}}/auth/register
 - Headers:
   - Content-Type: application/json
 - Body (raw, JSON):
@@ -108,10 +120,10 @@ Respuesta esperada:
 
 POST /auth/login
 
-Configuracion en Postman:
+Configuracion en Bruno:
 
 - Method: POST
-- URL: {{BASE_URL}}/auth/login
+- URL: {{baseUrl}}/auth/login
 - Headers:
   - Content-Type: application/json
 - Body (raw, JSON):
@@ -123,40 +135,39 @@ Configuracion en Postman:
 }
 ```
 
-Guarda el token de la respuesta en la variable TOKEN del Environment.
-Guarda tambien refreshToken en la variable REFRESH_TOKEN.
+Guarda el token de la respuesta en la variable token.
+Guarda tambien refreshToken en la variable refreshToken.
 
 ### 3) Verificar sesion
 
 GET /auth/check-status
 
-Configuracion en Postman:
+Configuracion en Bruno:
 
 - Method: GET
-- URL: {{BASE_URL}}/auth/check-status
-- Authorization tab:
-  - Type: Bearer Token
-  - Token: {{TOKEN}}
+- URL: {{baseUrl}}/auth/check-status
+- Auth: Bearer Token
+- Token: {{token}}
 
 ### 4) Renovar tokens con refresh token
 
 POST /auth/refresh-token
 
-Configuracion en Postman:
+Configuracion en Bruno:
 
 - Method: POST
-- URL: {{BASE_URL}}/auth/refresh-token
+- URL: {{baseUrl}}/auth/refresh-token
 - Headers:
   - Content-Type: application/json
 - Body (raw, JSON):
 
 ```json
 {
-  "refreshToken": "{{REFRESH_TOKEN}}"
+  "refreshToken": "{{refreshToken}}"
 }
 ```
 
-Guarda los nuevos valores token y refreshToken en TOKEN y REFRESH_TOKEN.
+Guarda los nuevos valores token y refreshToken en token y refreshToken.
 
 ### 5) Probar tareas privadas
 
@@ -169,16 +180,15 @@ Todos estos endpoints requieren token:
 - PATCH /tasks/:id/restore
 - DELETE /tasks/:id
 
-En Postman, para todos estos requests:
+En Bruno, para todos estos requests:
 
-- Authorization tab:
-  - Type: Bearer Token
-  - Token: {{TOKEN}}
+- Auth: Bearer Token
+- Token: {{token}}
 
 Crear tarea:
 
 - Method: POST
-- URL: {{BASE_URL}}/tasks
+- URL: {{baseUrl}}/tasks
 - Headers:
   - Content-Type: application/json
 - Body (raw, JSON):
@@ -194,17 +204,17 @@ Crear tarea:
 Listar tareas del usuario autenticado:
 
 - Method: GET
-- URL: {{BASE_URL}}/tasks?limit=10&offset=0
+- URL: {{baseUrl}}/tasks?limit=10&offset=0
 
 Ver una tarea por id:
 
 - Method: GET
-- URL: {{BASE_URL}}/tasks/1
+- URL: {{baseUrl}}/tasks/{{taskId}}
 
 Actualizar una tarea:
 
 - Method: PATCH
-- URL: {{BASE_URL}}/tasks/1
+- URL: {{baseUrl}}/tasks/{{taskId}}
 - Headers:
   - Content-Type: application/json
 - Body (raw, JSON):
@@ -218,21 +228,21 @@ Actualizar una tarea:
 Eliminar una tarea:
 
 - Method: DELETE
-- URL: {{BASE_URL}}/tasks/1
+- URL: {{baseUrl}}/tasks/{{taskId}}
 
 Restaurar una tarea eliminada (soft delete):
 
 - Method: PATCH
-- URL: {{BASE_URL}}/tasks/1/restore
+- URL: {{baseUrl}}/tasks/{{taskId}}/restore
 
 ### 6) Ejecutar seed de desarrollo
 
 El seed borra usuarios y tareas existentes, y crea datos de prueba nuevos.
 
-Configuracion en Postman:
+Configuracion en Bruno:
 
 - Method: POST
-- URL: {{BASE_URL}}/seed
+- URL: {{baseUrl}}/seed
 
 Respuesta esperada:
 

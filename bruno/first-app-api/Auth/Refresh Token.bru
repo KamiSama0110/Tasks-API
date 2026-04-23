@@ -1,0 +1,25 @@
+meta {
+  name: Refresh Token
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/auth/refresh-token
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "refreshToken": "{{refreshToken}}"
+  }
+}
+
+vars:pre-request {
+  refreshToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJhMDY3NDc1LWU4NjEtNDZhZC1iZWQ4LWRmYTlhNmJkYTY2NCIsImlhdCI6MTc3NjkwMzU3NywiZXhwIjoxNzc3NTA4Mzc3fQ.hS2yegyiaaS9iEsdYDBCn7Yoe7pXHqbD7b4FyPep-cc
+}

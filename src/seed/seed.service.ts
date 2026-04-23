@@ -55,6 +55,12 @@ export class SeedService {
 
     const usersToInsert = this.userRepository.create([
       {
+        email: 'test1@mail.com',
+        fullName: 'Test User',
+        password: hashedPassword,
+        roles: [ValidRoles.USER],
+      },
+      {
         email: 'admin@seed.dev',
         fullName: 'Seed Admin',
         password: hashedPassword,

@@ -1,0 +1,15 @@
+meta {
+  name: Check Status
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/auth/check-status
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

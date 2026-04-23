@@ -1,0 +1,15 @@
+meta {
+  name: Restore Task
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{baseUrl}}/tasks/{{taskId}}/restore
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

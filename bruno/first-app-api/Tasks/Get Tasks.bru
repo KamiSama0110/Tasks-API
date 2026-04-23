@@ -1,0 +1,15 @@
+meta {
+  name: Get Tasks
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/tasks?limit=10&offset=0
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
