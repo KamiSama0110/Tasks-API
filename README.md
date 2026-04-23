@@ -225,6 +225,20 @@ Restaurar una tarea eliminada (soft delete):
 - Method: PATCH
 - URL: {{BASE_URL}}/tasks/1/restore
 
+### 6) Ejecutar seed de desarrollo
+
+El seed borra usuarios y tareas existentes, y crea datos de prueba nuevos.
+
+Configuracion en Postman:
+
+- Method: POST
+- URL: {{BASE_URL}}/seed
+
+Respuesta esperada:
+
+- resumen de usuarios y tareas insertadas
+- credenciales de prueba para login
+
 ## Filtros de listado de tareas
 
 GET /tasks permite query params opcionales:
